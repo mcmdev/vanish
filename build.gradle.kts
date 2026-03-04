@@ -41,7 +41,7 @@ dependencies {
     runtimeDownload("space.arim.injector:injector:1.1.0-RC2")
     runtimeDownload("jakarta.inject:jakarta.inject-api:2.0.1")
     compileOnly("me.clip:placeholderapi:2.11.7-DEV-212")
-    compileOnly("com.github.Jikoo:OpenInv:5.1.15")
+    compileOnly("com.github.Jikoo:OpenInv:5.3.0")
     compileOnly("com.discordsrv:discordsrv:1.28.0")
 }
 
