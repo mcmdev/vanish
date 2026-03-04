@@ -36,7 +36,7 @@ public final class VanishHostListener implements Listener {
     private final Pattern pattern;
 
     @Inject
-    public VanishHostListener(Storage storage, Config config) {
+    public VanishHostListener(final Storage storage, final Config config) {
         this.storage = storage;
 
         this.pattern = Pattern.compile(config.vanishHostRegex());
@@ -46,8 +46,10 @@ public final class VanishHostListener implements Listener {
     private void onJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
 
-        InetSocketAddress virtualHost = player.getVirtualHost();
+        final InetSocketAddress virtualHost = player.getVirtualHost();
         if (virtualHost == null) return;
+
+        if (!player.hasPermission("vanish.hostname")) return;
 
         if (pattern.matcher(virtualHost.getHostString()).matches()) {
             storage.setVanished(player.getUniqueId(), true);

@@ -80,6 +80,7 @@ paperPluginYaml {
         register("vanish.protection.entity_damage")
         register("vanish.protection.player_interact")
         register("vanish.protection.player_drop")
+        register("vanish.hostname")
     }
 }
 

@@ -45,7 +45,7 @@ public interface Config {
     }
 
     default String vanishHostRegex() {
-        return "vanish.localhost";
+        return "vanish\\.localhost";
     }
 
     @SubSection
