@@ -24,7 +24,6 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import de.mcmdev.vanish.VanishPlugin;
 import de.mcmdev.vanish.api.VanishApi;
 import de.mcmdev.vanish.config.Config;
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -51,22 +50,14 @@ public class VanishCommand {
 
     private LiteralCommandNode<CommandSourceStack> createCommandNode() {
         return Commands.literal("vanish")
-                .requires(source -> source.getSender().hasPermission("vanish.command"))
+                .requires(commandSourceStack -> commandSourceStack.getSender().hasPermission("vanish.command"))
                 .executes(this::run)
                 .then(
-                        Commands.argument("target", ArgumentTypes.player())
-                                .requires(source -> source.getSender().hasPermission("vanish.command.others"))
-                                .executes(this::run)
-                )
-                .then(
                         Commands.literal("setlevel")
-                                .requires(source -> source.getSender().hasPermission("vanish.command.setlevel"))
+                                .requires(commandSourceStack -> commandSourceStack.getSender().hasPermission("vanish.command.setlevel"))
                                 .executes(this::runSetlevel)
                                 .then(
-                                        Commands.argument(
-                                                "level",
-                                                IntegerArgumentType.integer(0, config.maximumHidingLevel())
-                                        )
+                                        Commands.argument("level", IntegerArgumentType.integer(0, config.maximumHidingLevel()))
                                                 .executes(this::runSetlevelLevel)
                                 )
                 )
@@ -74,24 +65,16 @@ public class VanishCommand {
     }
 
     private int run(final CommandContext<CommandSourceStack> context) {
-
-        Player target;
-
-        if (context.getArguments().containsKey("target")) {
-            target = context.getArgument("target", Player.class);
-        } else {
-            if (!(context.getSource().getExecutor() instanceof Player player)) {
-                return 1;
-            }
-            target = player;
+        if (!(context.getSource().getExecutor() instanceof final Player player)) {
+            return 1;
         }
 
-        if (vanishApi.isVanished(target)) {
-            vanishApi.unvanish(target);
-            config.messages().toggleOff().send(target);
+        if (vanishApi.isVanished(player)) {
+            vanishApi.unvanish(player);
+            config.messages().toggleOff().send(player);
         } else {
-            vanishApi.vanish(target);
-            config.messages().toggleOn().send(target);
+            vanishApi.vanish(player);
+            config.messages().toggleOn().send(player);
         }
 
         return 0;
