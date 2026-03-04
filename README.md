@@ -31,4 +31,4 @@ A well-made vanish plugin for modern Paper servers.
 - Integrations
   - OpenInv SilentChest [/]
   - PAPI Expansion [/]
-- Vanish hostname [x]
+- Vanish hostname [/]

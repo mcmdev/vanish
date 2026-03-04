@@ -44,6 +44,10 @@ public interface Config {
         return CommandHook.of("inv %player_name%");
     }
 
+    default String vanishHostRegex() {
+        return "vanish\\.localhost";
+    }
+
     @SubSection
     default Messages messages() {
         return new Messages() {
