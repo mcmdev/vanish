@@ -62,7 +62,6 @@ public class VanishPlugin extends JavaPlugin {
 
         // Listeners
         registerListener(JoinQuitDispatcherListener.class);
-        registerListener(InteractionBlockingEffectListener.class);
         registerListener(MessageBlockingEffectListener.class);
         registerListener(HookListener.class);
         registerListener(FakeMessageListener.class);
